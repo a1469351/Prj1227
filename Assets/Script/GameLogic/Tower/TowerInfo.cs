@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerInfo : MonoBehaviour
+[CreateAssetMenu(menuName = "New Tower")]
+public class TowerInfo : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public float ShootCooldown;
+	public float BulletSpeed;
+	public float BulletDamage;
+	public GameObject TowerPrefab;
+	public GameObject TowerPreview;
 }

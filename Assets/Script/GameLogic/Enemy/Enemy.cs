@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour
 	virtual public void DoDamage(float dmg)
     {
 		curHp -= dmg;
-		Debug.Log("CurHp : " + curHp);
     }
 
 	virtual public float GetCurHp()

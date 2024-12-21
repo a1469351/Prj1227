@@ -24,7 +24,6 @@ public class NormalEnemy : Enemy
             {
                 if (CanAttack())
                 {
-                    Debug.Log("Attack");
                     attackTimer = attackCooldown;
                 }
             }

@@ -13,6 +13,7 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreText;
     public float spawnInterval = 2.0f;  // Éú³É¼ä¸ô
     public float score;
+    public TowerInfo currentSelection;
     void Awake()
     {
         Instance = this;
@@ -39,6 +40,8 @@ public class GameLogic : MonoBehaviour
             }
         }
         ClearDead();
+
+        CheckInput();
     }
 
     void ClearDead()
@@ -161,5 +164,33 @@ public class GameLogic : MonoBehaviour
     {
         score += val;
         ScoreText.text = score.ToString();
+    }
+
+    void CheckInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (currentSelection != null)
+            {
+                Vector2 pos = GetMousePosition();
+                Tower tower = Instantiate(currentSelection.TowerPrefab, pos, Quaternion.identity).GetComponent<Tower>();
+                towerList.Add(tower);
+                currentSelection = null;
+            }
+        }
+        if (Input.GetMouseButton(1))
+        {
+            currentSelection = null;
+        }
+    }
+
+    public Vector2 GetMousePosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    public void SetSelection(TowerInfo ti)
+    {
+        currentSelection = ti;
     }
 }
