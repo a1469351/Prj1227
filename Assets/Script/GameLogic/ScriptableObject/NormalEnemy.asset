@@ -16,7 +16,7 @@ MonoBehaviour:
   BaseScore: 100
   BaseHealth: 100
   BaseAttack: 10
-  AttackRange: 1
+  AttackRange: 2
   AttackCoolDown: 1
   Speed: 2
   EnemyPrefab: {fileID: 1961889098384256247, guid: 2c378d21176dcf04bb70eb8830f23d77, type: 3}

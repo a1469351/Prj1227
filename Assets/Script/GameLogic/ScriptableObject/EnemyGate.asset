@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83a6c0f189bb4f4b893c3bd28aa7ee8, type: 3}
+  m_Name: EnemyGate
+  m_EditorClassIdentifier: 
+  EnemyName: EnemyGate
+  BaseScore: 200
+  BaseHealth: 50
+  BaseAttack: 0
+  AttackRange: 0
+  AttackCoolDown: 5
+  Speed: 0
+  EnemyPrefab: {fileID: 2228003055374365929, guid: 7a0795481b1655a418d07a7df4d2f125, type: 3}

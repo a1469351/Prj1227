@@ -15,22 +15,26 @@ public class NormalEnemy : Enemy
         Tower target = GameLogic.Instance.GetNearestTower(transform.position);
         if (target != null)
         {
+            LookAt(target.transform.position);
             if (Vector2.Distance(target.transform.position, transform.position) > attackRange)
             {
-                Vector2 dir = target.transform.position - transform.position;
-                transform.Translate(dir.normalized * Time.deltaTime * speed);
+                Vector3 dir = target.transform.position - transform.position;
+                Vector3 pos = transform.position + (dir.normalized * Time.deltaTime * speed);
+                transform.position = pos;
             }
             else
             {
                 if (CanAttack())
                 {
+                    target.DoDamage(attack);
                     attackTimer = attackCooldown;
                 }
             }
         }
         else
         {
-            transform.Translate(-Vector2.one * Time.deltaTime);
+            Vector3 pos = transform.position + (-Vector3.right * Time.deltaTime);
+            //transform.position = pos;
         }
     }
 }

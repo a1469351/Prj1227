@@ -23,7 +23,7 @@ public class NormalTower : Tower
         if (target != null)
         {
             NormalBullet go = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<NormalBullet>();
-            go.SetParam(bulletSpeed, target.transform.position - transform.position, bulletDamage);
+            go.SetParam(bulletSpeed, target.transform.position - transform.position, bulletDamage, this);
         }
         shootTimer = shootCooldown;
     }

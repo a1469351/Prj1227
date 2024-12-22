@@ -61,12 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\GameLogic\Tower\NormalTower.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\BigEnemy.cs" />
     <Compile Include="Assets\Script\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Script\GameLogic\Tower\MultiTower.cs" />
     <Compile Include="Assets\Script\Manager\HierachyScript.cs" />
     <Compile Include="Assets\Script\Manager\TimeManager.cs" />
     <Compile Include="Assets\Script\GameLogic\Bullet\NormalBullet.cs" />
     <Compile Include="Assets\Script\Manager\UIManager.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\EnemyGate.cs" />
     <Compile Include="Assets\Script\Utilities\PrefabHelper.cs" />
     <Compile Include="Assets\Script\Utilities\SingletonBase.cs" />
     <Compile Include="Assets\Script\Manager\AudioManager.cs" />
@@ -75,12 +78,14 @@
     <Compile Include="Assets\Script\Utilities\UIAlphaEffects.cs" />
     <Compile Include="Assets\Script\Manager\PoolObject.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\NormalEnemy.cs" />
+    <Compile Include="Assets\Script\Utilities\Language.cs" />
     <Compile Include="Assets\Script\Utilities\CommonFunc.cs" />
     <Compile Include="Assets\Script\Manager\ObjectPoolManager.cs" />
     <Compile Include="Assets\Script\GameLogic\Tower\Tower.cs" />
     <Compile Include="Assets\Script\GameLogic\GameLogic.cs" />
     <Compile Include="Assets\Script\Manager\EventTriggerListener.cs" />
     <Compile Include="Assets\Script\Manager\EventManager.cs" />
+    <Compile Include="Assets\Script\GameLogic\DescriptionUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

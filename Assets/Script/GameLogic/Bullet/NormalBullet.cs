@@ -7,6 +7,7 @@ public class NormalBullet : MonoBehaviour
     public float speed;
     public Vector2 dir;
     public float damage;
+    public Tower tower;
     private bool active = false;
 
     // Update is called once per frame
@@ -17,17 +18,19 @@ public class NormalBullet : MonoBehaviour
             transform.Translate(dir * speed * Time.deltaTime);
         }
 
-        if (transform.position.x > 100 || transform.position.y > 100)
+        if (Mathf.Abs(transform.position.x) > GameLogic.Instance.PositionLimit 
+            || Mathf.Abs(transform.position.y) > GameLogic.Instance.PositionLimit)
         {
             Destroy(gameObject);
         }
     }
 
-    public void SetParam(float _speed, Vector2 _dir, float _damage)
+    public void SetParam(float _speed, Vector2 _dir, float _damage, Tower _tower)
     {
         speed = _speed;
         dir = _dir.normalized;
         damage = _damage;
+        tower = _tower;
         active = true;
     }
 
@@ -37,7 +40,11 @@ public class NormalBullet : MonoBehaviour
         if (collision.gameObject.GetComponent<Enemy>() != null)
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.DoDamage(damage);
+            bool kill = enemy.DoDamage(damage);
+            if (kill)
+            {
+                tower.GetExp(enemy.ei.BaseScore);
+            }
             Destroy(gameObject);
         }
     }

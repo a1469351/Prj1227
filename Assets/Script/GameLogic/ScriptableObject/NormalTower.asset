@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549f1346c36b9fe44a207134312ddf23, type: 3}
   m_Name: NormalTower
   m_EditorClassIdentifier: 
+  NameID: 1001
+  BaseHp: 100
   ShootCooldown: 0.2
   BulletSpeed: 10
   BulletDamage: 10
+  Price: 100
+  DescriptionID: 10011
   TowerPrefab: {fileID: 4785953502103764041, guid: 75dce2e99764a8045931a4cbda03b35d, type: 3}
-  TowerPreview: {fileID: 0}
+  TowerPreview: {fileID: 7368969964161280648, guid: 7b0b45e468e907848a62b88a62ca07a1, type: 3}
