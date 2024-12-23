@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\GameLogic\Tower\NormalTower.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\BigEnemy.cs" />
+    <Compile Include="Assets\Script\GameLogic\Phase\PhaseInfo.cs" />
     <Compile Include="Assets\Script\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\Enemy.cs" />
     <Compile Include="Assets\Script\GameLogic\Tower\MultiTower.cs" />

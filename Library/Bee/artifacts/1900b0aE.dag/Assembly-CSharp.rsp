@@ -392,6 +392,7 @@
 "Assets/Script/GameLogic/Enemy/EnemyInfo.cs"
 "Assets/Script/GameLogic/Enemy/NormalEnemy.cs"
 "Assets/Script/GameLogic/GameLogic.cs"
+"Assets/Script/GameLogic/Phase/PhaseInfo.cs"
 "Assets/Script/GameLogic/Tower/MultiTower.cs"
 "Assets/Script/GameLogic/Tower/NormalTower.cs"
 "Assets/Script/GameLogic/Tower/Tower.cs"

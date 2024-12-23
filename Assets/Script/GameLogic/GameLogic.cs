@@ -13,6 +13,7 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private List<TowerInfo> towerInfoList;
     [SerializeField] private List<Enemy> enemyList;
     [SerializeField] private List<EnemyInfo> enemyInfoList;
+    [SerializeField] private List<PhaseInfo> phaseInfoList;
     [SerializeField] private Transform SelectionRoot;
     public float PositionLimit;
     private List<Enemy> newEnemyList = new List<Enemy>();
@@ -20,12 +21,18 @@ public class GameLogic : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI ScoreText;
     [SerializeField] private TextMeshProUGUI GoldText;
+    [SerializeField] private TextMeshProUGUI phaseText;
     [SerializeField] private DescriptionUI desc;
+    [SerializeField] private GameObject gameOverPopup;
+    [SerializeField] private GameObject startMenu;
 
     [Header("Info")]
     public float spawnInterval = 2.0f;  // Éú³É¼ä¸ô
     public float score;
     public float gold;
+    public int phase;
+    public bool phaseSpawning = false;
+    public bool gamePausing = false;
     public TowerInfo currentSelection;
     public Tower currentSelectionTower;
     void Awake()
@@ -37,19 +44,10 @@ public class GameLogic : MonoBehaviour
 
     void Init()
     {
-        CancelSelection();
         SpwanSelection();
-        SetScoreAndGold(0, 0);
-        StartCoroutine(SpawnMonsters());
 
-        if (towerList.Count > 0)
-        {
-            towerList[0].SetParam(towerInfoList[0], 1);
-            EventTriggerListener.Get(towerList[0].gameObject).onClick = (go) =>
-            {
-                UpdateSelectionInGame(towerList[0]);
-            };
-        }
+        //StartCoroutine(SpawnMonsters());
+        //StartPhase();
     }
 
     void SpwanSelection()
@@ -69,6 +67,7 @@ public class GameLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gamePausing) return;
         foreach (Tower tower in towerList)
         {
             if (tower.GetCurHp() > 0)
@@ -86,7 +85,83 @@ public class GameLogic : MonoBehaviour
         ClearDead();
         AddNewEnemy();
 
+        CheckGameOver();
         CheckInput();
+        CheckPhase();
+    }
+
+    void CheckGameOver()
+    {
+        if (phase <= 0) return;
+        if (towerList.Count <= 0)
+        {
+            gameOverPopup.SetActive(true);
+            gamePausing = true;
+        }
+    }
+
+    public void OnContinueClick()
+    {
+        float randomX = Random.Range(-5, 0.0f);
+        float randomY = Random.Range(-4, 4f);
+        BuildTower(towerInfoList[0], new Vector2(randomX, randomY));
+        gameOverPopup.SetActive(false);
+        gamePausing = false;
+    }
+
+    public void StartPhase()
+    {
+        CancelSelection();
+        SetScoreAndGold(0, 0);
+        BuildTower(towerInfoList[0], new Vector2(-5.5f, 0));
+        phase = 1;
+        phaseSpawning = true;
+        gamePausing = false;
+        StartCoroutine("SpawnPhase");
+        phaseText.text = phase.ToString();
+        startMenu.SetActive(false);
+    }
+
+    public void BackToStartMenu()
+    {
+        startMenu.SetActive(true);
+        gameOverPopup.SetActive(false);
+        phase = 0;
+        ClearAll();
+    }
+
+    void CheckPhase()
+    {
+        if (phase <= 0) return;
+        if (phaseInfoList.Count <= 0) return;
+        if (enemyList.Count != 0 || newEnemyList.Count != 0) return;
+        if (phaseSpawning) return;
+
+        phaseSpawning = true;
+        StartCoroutine("SpawnPhase");
+        phase++;
+        phaseText.text = phase.ToString();
+    }
+
+    IEnumerator SpawnPhase()
+    {
+        int randomPhase = Random.Range(0, phaseInfoList.Count);
+        PhaseInfo pi = phaseInfoList[randomPhase];
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < pi.enemyList.Count; i++)
+        {
+            for (int j = 0; j < pi.enemyNum[i]; j++)
+            {
+                EnemyInfo ei = pi.enemyList[i];
+                float randomX = Random.Range(4, 7.0f);
+                float randomY = Random.Range(-4, 4.0f);
+
+                Vector3 spawnPosition = new Vector3(randomX, randomY, 0);
+                CreateNewEnemy(ei, spawnPosition);
+                yield return new WaitForSeconds(pi.spawnInterval);
+            }
+        }
+        phaseSpawning = false;
     }
 
     void AddNewEnemy()
@@ -96,6 +171,20 @@ public class GameLogic : MonoBehaviour
             enemyList.Add(enemy);
         }
         newEnemyList.Clear();
+    }
+
+    void ClearAll()
+    {
+        foreach (Tower tower in towerList)
+        {
+            Destroy(tower.gameObject);
+        }
+        foreach (Enemy enemy in enemyList)
+        {
+            Destroy(enemy.gameObject);
+        }
+        towerList.Clear();
+        enemyList.Clear();
     }
 
     void ClearDead()
@@ -132,11 +221,12 @@ public class GameLogic : MonoBehaviour
 
     public void CreateNewEnemy(EnemyInfo ei, Vector2 pos)
     {
+        float phaseModifier = 1 + phase * 0.1f;
         Enemy enemy = Instantiate(ei.EnemyPrefab, new Vector3(5, 3, 0), Quaternion.identity).GetComponent<Enemy>();
-        enemy.SetAttack(ei.BaseAttack);
+        enemy.SetAttack(ei.BaseAttack * phaseModifier);
         enemy.SetAttackRange(ei.AttackRange);
         enemy.SetAttackCooldown(ei.AttackCoolDown);
-        enemy.SetHp(ei.BaseHealth);
+        enemy.SetHp(ei.BaseHealth * phaseModifier);
         enemy.SetPosition(pos);
         enemy.SetSpeed(ei.Speed);
         enemy.SetEnemyInfo(ei);
@@ -277,6 +367,18 @@ public class GameLogic : MonoBehaviour
         };
     }
 
+    private void BuildTower(TowerInfo ti, Vector2 pos)
+    {
+        Tower tower = Instantiate(ti.TowerPrefab, pos, Quaternion.identity).GetComponent<Tower>();
+        tower.ti = ti;
+        tower.SetParam(ti, 1);
+        towerList.Add(tower);
+        EventTriggerListener.Get(tower.gameObject).onClick = (go) =>
+        {
+            UpdateSelectionInGame(tower);
+        };
+    }
+
     public Vector2 GetMousePosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -304,8 +406,12 @@ public class GameLogic : MonoBehaviour
 
     public void UpdateSelectionInGame(Tower t)
     {
+        if (t.GetCurHp() <= 0)
+        {
+            CancelSelection();
+        }
         TowerInfo ti = t.ti;
-        desc.UpdateInfoInGame(ti.NameID, ti.ShootCooldown, ti.BulletDamage, t.level, t.GetCurHp(), ti.DescriptionID);
+        desc.UpdateInfoInGame(ti.NameID, ti.ShootCooldown, t.bulletDamage, t.level, t.GetCurHp(), ti.DescriptionID);
         desc.gameObject.SetActive(true);
         currentSelection = null;
         currentSelectionTower = t;

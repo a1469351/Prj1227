@@ -29,9 +29,9 @@ public class DescriptionUI : MonoBehaviour
     {
         Name.text = Language.list[nameid];
         ShootCooldownVal.text = cd.ToString();
-        DamageVal.text = dmg.ToString();
+        DamageVal.text = string.Format("{0:f2}", dmg);
         LevelVal.text = price.ToString();
-        HpVal.text = hp.ToString();
+        HpVal.text = Mathf.CeilToInt(hp).ToString();
         Description.text = Language.list[descid];
         PriceVal.transform.parent.gameObject.SetActive(false);
         LevelVal.transform.parent.gameObject.SetActive(true);
