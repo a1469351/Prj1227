@@ -15,8 +15,17 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private List<EnemyInfo> enemyInfoList;
     [SerializeField] private List<PhaseInfo> phaseInfoList;
     [SerializeField] private Transform SelectionRoot;
+    [SerializeField] private TowerInfo FirstTower;
+    public GameObject DestroyEffect;
     public float PositionLimit;
     private List<Enemy> newEnemyList = new List<Enemy>();
+
+    [Header("GameValue")]
+    [SerializeField] private float InitialGold;
+    [SerializeField] private float GoldPerPhase;
+    [SerializeField] private float AdditiveGoldPerPhase;
+    public float EnemyStrengthPerPhase;
+    public float TowerStrengthPerLevel;
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI ScoreText;
@@ -39,6 +48,8 @@ public class GameLogic : MonoBehaviour
     {
         Instance = this;
 
+        gameObject.AddComponent<ResourceManager>();
+        gameObject.AddComponent<AudioManager>();
         Init();
     }
 
@@ -112,8 +123,8 @@ public class GameLogic : MonoBehaviour
     public void StartPhase()
     {
         CancelSelection();
-        SetScoreAndGold(0, 0);
-        BuildTower(towerInfoList[0], new Vector2(-5.5f, 0));
+        SetScoreAndGold(0, InitialGold);
+        BuildTower(FirstTower, new Vector2(-5.5f, 0));
         phase = 1;
         phaseSpawning = true;
         gamePausing = false;
@@ -141,6 +152,7 @@ public class GameLogic : MonoBehaviour
         StartCoroutine("SpawnPhase");
         phase++;
         phaseText.text = phase.ToString();
+        UpdateGold(GoldPerPhase + phase * AdditiveGoldPerPhase);
     }
 
     IEnumerator SpawnPhase()
@@ -214,14 +226,14 @@ public class GameLogic : MonoBehaviour
         foreach (Enemy enemy in clearEnemyList)
         {
             enemyList.Remove(enemy);
-            UpdateScoreAndGold(enemy.ei.BaseScore, enemy.ei.BaseScore);
+            UpdateScoreAndGold(enemy.ei.BaseScore, 0);
             Destroy(enemy.gameObject);
         }
     }
 
     public void CreateNewEnemy(EnemyInfo ei, Vector2 pos)
     {
-        float phaseModifier = 1 + phase * 0.1f;
+        float phaseModifier = 1 + phase * EnemyStrengthPerPhase;
         Enemy enemy = Instantiate(ei.EnemyPrefab, new Vector3(5, 3, 0), Quaternion.identity).GetComponent<Enemy>();
         enemy.SetAttack(ei.BaseAttack * phaseModifier);
         enemy.SetAttackRange(ei.AttackRange);
@@ -318,7 +330,7 @@ public class GameLogic : MonoBehaviour
         score = sval;
         ScoreText.text = score.ToString();
         gold = gval;
-        GoldText.text = score.ToString();
+        GoldText.text = gold.ToString();
     }
 
     public void UpdateScoreAndGold(float sval, float gval)

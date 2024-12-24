@@ -71,7 +71,7 @@ public class Tower : MonoBehaviour
 
 	virtual public void ModifyParamByLevel()
     {
-		float phaseModifier = 1 + (level-1) * 0.01f;
+		float phaseModifier = 1 + (level-1) * GameLogic.Instance.TowerStrengthPerLevel;
 		float hpDiff = baseMaxHp * phaseModifier - maxHp;
 		maxHp = baseMaxHp * phaseModifier;
 		curHp += hpDiff;
@@ -83,6 +83,7 @@ public class Tower : MonoBehaviour
 		if (curHp <= 0) return;
 		curHp -= val;
 		UpdateVisual();
+		if (curHp <= 0) OnDead();
 	}
 
 	virtual public void UpdateVisual()
@@ -92,5 +93,10 @@ public class Tower : MonoBehaviour
 		hptrans.localScale = new Vector3(hptrans.localScale.x, ratio, hptrans.localScale.z);
 		hptrans.localPosition = new Vector3(hptrans.localPosition.x, -(1 - ratio) / 2, hptrans.localPosition.z);
 		GameLogic.Instance.UpdateTowerInGame(this);
+	}
+
+	virtual public void OnDead()
+	{
+		Instantiate(GameLogic.Instance.DestroyEffect, transform.position, Quaternion.identity);
 	}
 }

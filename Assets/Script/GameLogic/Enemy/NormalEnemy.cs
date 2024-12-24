@@ -26,8 +26,7 @@ public class NormalEnemy : Enemy
             {
                 if (CanAttack())
                 {
-                    target.DoDamage(attack);
-                    attackTimer = attackCooldown;
+                    Attack(target);
                 }
             }
         }
@@ -36,5 +35,11 @@ public class NormalEnemy : Enemy
             Vector3 pos = transform.position + (-Vector3.right * Time.deltaTime);
             //transform.position = pos;
         }
+    }
+
+    virtual public void Attack(Tower target)
+    {
+        target.DoDamage(attack);
+        attackTimer = attackCooldown;
     }
 }

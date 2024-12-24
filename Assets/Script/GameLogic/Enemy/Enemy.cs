@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ns;
 
 public class Enemy : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour
 		if (curHp <= 0) return false;
 		curHp -= dmg;
 		UpdateVisual();
+		AudioManager.Instance.PlayOneShotAudio("Snow");
 		if (curHp <= 0)
 		{
 			OnDead();
@@ -100,6 +102,6 @@ public class Enemy : MonoBehaviour
 
 	virtual public void OnDead()
     {
-
+		Instantiate(GameLogic.Instance.DestroyEffect, transform.position, Quaternion.identity);
     }
 }

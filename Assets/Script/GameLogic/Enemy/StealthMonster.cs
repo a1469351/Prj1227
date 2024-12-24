@@ -36,4 +36,10 @@ public class StealthMonster : NormalEnemy
             invisible = false;
         }
     }
+
+    public override void Attack(Tower target)
+    {
+        base.Attack(target);
+        Reveal();
+    }
 }

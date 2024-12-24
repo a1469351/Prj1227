@@ -4549,7 +4549,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 239582844bb04dd4885c0400937781ea, type: 2}
   - {fileID: 11400000, guid: a83d880714ff2fe48ad8022d7f3d4010, type: 2}
   SelectionRoot: {fileID: 1353175298}
+  FirstTower: {fileID: 11400000, guid: 24b4ec246296c1148822be9fe57dbb92, type: 2}
+  DestroyEffect: {fileID: 8339673879066046463, guid: 272a3d4744b9e6c4180a0a3a8a6f7c76, type: 3}
   PositionLimit: 10
+  InitialGold: 100
+  GoldPerPhase: 100
+  AdditiveGoldPerPhase: 10
+  EnemyStrengthPerPhase: 0.1
+  TowerStrengthPerLevel: 0.01
   ScoreText: {fileID: 624068126}
   GoldText: {fileID: 611874583}
   phaseText: {fileID: 1760203020}

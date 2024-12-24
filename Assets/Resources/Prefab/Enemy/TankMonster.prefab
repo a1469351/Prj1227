@@ -124,6 +124,7 @@ MonoBehaviour:
   attackTimer: 0
   attackCooldown: 1
   ei: {fileID: 0}
+  invisible: 0
   shieldNum: 3
   Shield: {fileID: 6583788044302166709}
   shieldNumText: {fileID: 6644762710832423247}
@@ -481,7 +482,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.51886785, g: 0.9735557, b: 1, a: 1}
   m_FlipX: 0

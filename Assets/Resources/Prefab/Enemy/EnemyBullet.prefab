@@ -152,7 +152,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.14702159, y: 0}
@@ -210,6 +210,7 @@ MonoBehaviour:
   attackTimer: 0
   attackCooldown: 0
   ei: {fileID: 0}
+  invisible: 0
 --- !u!1 &3601963197552438471
 GameObject:
   m_ObjectHideFlags: 0

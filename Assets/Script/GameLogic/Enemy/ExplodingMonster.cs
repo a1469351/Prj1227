@@ -14,6 +14,11 @@ public class ExplodingMonster : NormalEnemy
         Explode();
     }
 
+    public override void Attack(Tower target)
+    {
+        DoDamage(maxHp);
+    }
+
     // 自爆方法
     private void Explode()
     {

@@ -11,7 +11,7 @@ namespace ns
 	public class AudioManager : SingletonBase<AudioManager>
 	{
         private AudioSource BGMAudioSource;
-        private int oneShotAudioNum = 5;
+        private int oneShotAudioNum = 20;
         private int oneShotAudioIndex = 0;
         private List<AudioSource> oneShotAudioList = new List<AudioSource>();
         private float totalVolume = 1;
@@ -24,11 +24,13 @@ namespace ns
 
         private void Init()
         {
-            BGMAudioSource = GameObject.Find("Bg").GetComponent<AudioSource>();
+            BGMAudioSource = gameObject.AddComponent<AudioSource>();
             PlayBGM();
+            SetTotalVolume(0.5f);
             for (int i = 0; i < oneShotAudioNum; ++i)
             {
                 GameObject go = new GameObject();
+                go.transform.SetParent(transform);
                 AudioSource ads = go.AddComponent<AudioSource>();
                 oneShotAudioList.Add(ads);
             }
@@ -36,7 +38,7 @@ namespace ns
 
         private void PlayBGM(string name = "")
         {
-            if (string.IsNullOrEmpty(name)) name = "Temporal_Displacement";
+            if (string.IsNullOrEmpty(name)) name = "Melancholic_Memory";
             AudioClip adc = ResourceManager.Instance.GetAudioClip(name);
             BGMAudioSource.clip = adc;
             BGMAudioSource.Play();
