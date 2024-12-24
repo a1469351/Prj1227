@@ -65,6 +65,7 @@
     <Compile Include="Assets\Script\GameLogic\Phase\PhaseInfo.cs" />
     <Compile Include="Assets\Script\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Script\GameLogic\Bullet\LaserBullet.cs" />
     <Compile Include="Assets\Script\GameLogic\Tower\MultiTower.cs" />
     <Compile Include="Assets\Script\Manager\HierachyScript.cs" />
     <Compile Include="Assets\Script\Manager\TimeManager.cs" />
@@ -74,10 +75,15 @@
     <Compile Include="Assets\Script\Utilities\PrefabHelper.cs" />
     <Compile Include="Assets\Script\Utilities\SingletonBase.cs" />
     <Compile Include="Assets\Script\Manager\AudioManager.cs" />
+    <Compile Include="Assets\Script\Effect\ExplosionEffect.cs" />
     <Compile Include="Assets\Script\GameLogic\Tower\TowerInfo.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\RangedMonster.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\EnemyInfo.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\ExplodingMonster.cs" />
     <Compile Include="Assets\Script\Utilities\UIAlphaEffects.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\StealthMonster.cs" />
     <Compile Include="Assets\Script\Manager\PoolObject.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\TankMonster.cs" />
     <Compile Include="Assets\Script\GameLogic\Enemy\NormalEnemy.cs" />
     <Compile Include="Assets\Script\Utilities\Language.cs" />
     <Compile Include="Assets\Script\Utilities\CommonFunc.cs" />
@@ -85,6 +91,8 @@
     <Compile Include="Assets\Script\GameLogic\Tower\Tower.cs" />
     <Compile Include="Assets\Script\GameLogic\GameLogic.cs" />
     <Compile Include="Assets\Script\Manager\EventTriggerListener.cs" />
+    <Compile Include="Assets\Script\GameLogic\Tower\LaserTower.cs" />
+    <Compile Include="Assets\Script\GameLogic\Enemy\EnemyBullet.cs" />
     <Compile Include="Assets\Script\Manager\EventManager.cs" />
     <Compile Include="Assets\Script\GameLogic\DescriptionUI.cs" />
   </ItemGroup>

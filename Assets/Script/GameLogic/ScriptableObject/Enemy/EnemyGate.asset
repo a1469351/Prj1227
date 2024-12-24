@@ -18,5 +18,5 @@ MonoBehaviour:
   BaseAttack: 0
   AttackRange: 0
   AttackCoolDown: 5
-  Speed: 0
+  Speed: 0.5
   EnemyPrefab: {fileID: 2228003055374365929, guid: 7a0795481b1655a418d07a7df4d2f125, type: 3}

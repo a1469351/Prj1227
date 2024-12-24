@@ -270,6 +270,7 @@ public class GameLogic : MonoBehaviour
         float dis = 0;
         foreach (Enemy e in enemyList)
         {
+            if (e.invisible) continue;
             if (enemy == null)
             {
                 enemy = e;

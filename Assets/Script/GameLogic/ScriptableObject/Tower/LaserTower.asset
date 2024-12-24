@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549f1346c36b9fe44a207134312ddf23, type: 3}
+  m_Name: LaserTower
+  m_EditorClassIdentifier: 
+  NameID: 1003
+  BaseHp: 100
+  ShootCooldown: 1
+  BulletSpeed: 0
+  BulletDamage: 10
+  Price: 100
+  DescriptionID: 10031
+  TowerPrefab: {fileID: 7078924230025938544, guid: cfc2e6bc0fce6d442a9f8a42dba2dac1, type: 3}
+  TowerPreview: {fileID: 4731495527632381155, guid: 7095014deaecea14e9626a0924990399, type: 3}

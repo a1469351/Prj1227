@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83a6c0f189bb4f4b893c3bd28aa7ee8, type: 3}
+  m_Name: StealthMonster
+  m_EditorClassIdentifier: 
+  EnemyName: StealthMonster
+  BaseScore: 100
+  BaseHealth: 100
+  BaseAttack: 10
+  AttackRange: 2
+  AttackCoolDown: 1
+  Speed: 4
+  EnemyPrefab: {fileID: 5482732441220444415, guid: 84d37d45747a2c74ca51f7364875498b, type: 3}

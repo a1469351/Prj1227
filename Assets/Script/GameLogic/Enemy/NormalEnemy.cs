@@ -10,7 +10,7 @@ public class NormalEnemy : Enemy
         MoveAndAttack();
     }
 
-    public void MoveAndAttack()
+    virtual public void MoveAndAttack()
     {
         Tower target = GameLogic.Instance.GetNearestTower(transform.position);
         if (target != null)

@@ -4536,15 +4536,18 @@ MonoBehaviour:
   towerInfoList:
   - {fileID: 11400000, guid: 24b4ec246296c1148822be9fe57dbb92, type: 2}
   - {fileID: 11400000, guid: f28b045d2c5ac9444bd4bbdef09a4850, type: 2}
+  - {fileID: 11400000, guid: 50b95bffda8cd2146b533ead83786516, type: 2}
   enemyList: []
   enemyInfoList:
   - {fileID: 11400000, guid: e430fd14c148c42428702c706f32df43, type: 2}
-  - {fileID: 11400000, guid: 2aa49fa759c2b46448f40c84a9bda045, type: 2}
-  - {fileID: 11400000, guid: bcbec78f868314246b73cd5137cab35d, type: 2}
   phaseInfoList:
-  - {fileID: 11400000, guid: f87994206fb92614faa1d1917f8822ba, type: 2}
+  - {fileID: 11400000, guid: 52d8dd0b9ac215f4abb164af70afa98f, type: 2}
   - {fileID: 11400000, guid: ecaea51f8a83aa845b3ca121a7c4a13b, type: 2}
   - {fileID: 11400000, guid: fce339f361d6c954a81f2e133f9f9011, type: 2}
+  - {fileID: 11400000, guid: f87994206fb92614faa1d1917f8822ba, type: 2}
+  - {fileID: 11400000, guid: 80b881e50bbb18b4e9ed53a1c03ced01, type: 2}
+  - {fileID: 11400000, guid: 239582844bb04dd4885c0400937781ea, type: 2}
+  - {fileID: 11400000, guid: a83d880714ff2fe48ad8022d7f3d4010, type: 2}
   SelectionRoot: {fileID: 1353175298}
   PositionLimit: 10
   ScoreText: {fileID: 624068126}
@@ -4590,7 +4593,7 @@ GameObject:
   - component: {fileID: 2147384413}
   m_Layer: 5
   m_HasEditorInfo: 1
-  m_Name: Canvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

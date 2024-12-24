@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
 	protected float speed;
 	public EnemyInfo ei;
 	protected Transform hptrans;
+	public bool invisible = false;
 	virtual public void Awake()
 	{
 		hptrans = transform.Find("Mask");
