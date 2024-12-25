@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class LaserBullet : NormalBullet
 {
-    
+    private void Awake()
+    {
+        Destroy(gameObject, 0.5f);
+    }
 }

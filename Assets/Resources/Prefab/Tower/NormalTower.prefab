@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4785953502103764041}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.51, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,6 +53,7 @@ MonoBehaviour:
   shootCooldown: 0.2
   bulletSpeed: 10
   bulletDamage: 10
+  baseBulletDamage: 10
   bullet: {fileID: 7194011064782163861, guid: 5d2467e892beb6e4ca139d1c7a0dca9f, type: 3}
   ti: {fileID: 0}
   level: 0

@@ -16,9 +16,11 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private List<PhaseInfo> phaseInfoList;
     [SerializeField] private Transform SelectionRoot;
     [SerializeField] private TowerInfo FirstTower;
+    [SerializeField] private Transform CursorFollower;
     public GameObject DestroyEffect;
     public float PositionLimit;
     private List<Enemy> newEnemyList = new List<Enemy>();
+    private GameObject tempTower;
 
     [Header("GameValue")]
     [SerializeField] private float InitialGold;
@@ -33,7 +35,9 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private TextMeshProUGUI phaseText;
     [SerializeField] private DescriptionUI desc;
     [SerializeField] private GameObject gameOverPopup;
+    [SerializeField] private TextMeshProUGUI gameOverScoreText;
     [SerializeField] private GameObject startMenu;
+    [SerializeField] private GameObject GuidePopup;
 
     [Header("Info")]
     public float spawnInterval = 2.0f;  // Éú³É¼ä¸ô
@@ -99,6 +103,17 @@ public class GameLogic : MonoBehaviour
         CheckGameOver();
         CheckInput();
         CheckPhase();
+        CheckCursorPos();
+    }
+
+    void CheckCursorPos()
+    {
+        Vector2 pos = GetMousePosition();
+        CursorFollower.position = pos;
+        bool canBuild = CanBuildTower();
+        Color maskColor = canBuild ? Color.yellow : Color.red;
+        maskColor.a = 0.8f;
+        CursorFollower.Find("Mask").GetComponent<SpriteRenderer>().color = maskColor;
     }
 
     void CheckGameOver()
@@ -108,6 +123,7 @@ public class GameLogic : MonoBehaviour
         {
             gameOverPopup.SetActive(true);
             gamePausing = true;
+            gameOverScoreText.text = score.ToString();
         }
     }
 
@@ -120,17 +136,42 @@ public class GameLogic : MonoBehaviour
         gamePausing = false;
     }
 
-    public void StartPhase()
+    public void OnStartClick()
     {
-        CancelSelection();
+        startMenu.SetActive(false);
+        InitParam();
+        if (!GuidePopup.activeInHierarchy)
+        {
+            StartPhase();
+        }
+        else
+        {
+            gamePausing = true;
+            SetSelection(towerInfoList[0]);
+            CursorFollower.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnGuideClick()
+    {
+        GuidePopup.SetActive(false);
+        StartPhase();
+    }
+
+    void InitParam()
+    {
         SetScoreAndGold(0, InitialGold);
         BuildTower(FirstTower, new Vector2(-5.5f, 0));
         phase = 1;
+        phaseText.text = phase.ToString();
+    }
+
+    public void StartPhase()
+    {
+        CancelSelection();
         phaseSpawning = true;
         gamePausing = false;
         StartCoroutine("SpawnPhase");
-        phaseText.text = phase.ToString();
-        startMenu.SetActive(false);
     }
 
     public void BackToStartMenu()
@@ -162,7 +203,7 @@ public class GameLogic : MonoBehaviour
         yield return new WaitForSeconds(1);
         for (int i = 0; i < pi.enemyList.Count; i++)
         {
-            for (int j = 0; j < pi.enemyNum[i]; j++)
+            for (int j = 0; j < pi.enemyNum[i] + phase - 1; j++)
             {
                 EnemyInfo ei = pi.enemyList[i];
                 float randomX = Random.Range(4, 7.0f);
@@ -351,20 +392,34 @@ public class GameLogic : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!IsPointerOnUI() && currentSelection != null)
+            if (CanBuildTower())
             {
-                if (gold >= currentSelection.Price)
-                {
-                    BuildTower();
-                    UpdateGold(-currentSelection.Price);
-                    CancelSelection();
-                }
+                BuildTower();
+                UpdateGold(-currentSelection.Price);
+                CancelSelection();
             }
         }
         if (Input.GetMouseButton(1))
         {
             CancelSelection();
         }
+    }
+
+    bool CanBuildTower()
+    {
+        if (currentSelection == null || IsPointerOnUI()) return false;
+        return !IsCursorArroundTower() && gold >= currentSelection.Price;
+    }
+
+    bool IsCursorArroundTower()
+    {
+        Vector2 cursorPos = GetMousePosition();
+        Collider2D[] cds = Physics2D.OverlapBoxAll(cursorPos, Vector2.one, 0);
+        foreach (Collider2D cd in cds)
+        {
+            if (cd.gameObject.GetComponent<Tower>() != null) return true;
+        }
+        return false;
     }
 
     private void BuildTower()
@@ -409,12 +464,18 @@ public class GameLogic : MonoBehaviour
         currentSelection = null;
         currentSelectionTower = null;
         desc.gameObject.SetActive(false);
+        if (tempTower != null) Destroy(tempTower);
+        CursorFollower.gameObject.SetActive(false);
     }
 
     public void UpdateSelection(TowerInfo ti)
     {
         desc.UpdateInfoInSelection(ti.NameID, ti.ShootCooldown, ti.BulletDamage, ti.Price, ti.BaseHp, ti.DescriptionID);
         desc.gameObject.SetActive(true);
+        if (tempTower != null) Destroy(tempTower);
+        tempTower = Instantiate(currentSelection.TowerPrefab, CursorFollower);
+        tempTower.GetComponent<BoxCollider2D>().enabled = false;
+        CursorFollower.gameObject.SetActive(true);
     }
 
     public void UpdateSelectionInGame(Tower t)
@@ -428,6 +489,8 @@ public class GameLogic : MonoBehaviour
         desc.gameObject.SetActive(true);
         currentSelection = null;
         currentSelectionTower = t;
+        if (tempTower != null) Destroy(tempTower);
+        CursorFollower.gameObject.SetActive(false);
     }
 
     public void UpdateTowerInGame(Tower t)
